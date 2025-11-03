@@ -1,37 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Каталог видео
 
-## Getting Started
+Веб-приложение для просмотра и фильтрации каталога видео на Next.js 16 с React Query.
 
-First, run the development server:
+## 🚀 Быстрый старт
+
+### Установка
+
+```bash
+npm install
+```
+
+### Запуск
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Приложение доступно по адресу [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Сборка для продакшена
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## 📋 Основные возможности
 
-To learn more about Next.js, take a look at the following resources:
+- 🔍 Поиск видео по названию с дебаунсингом
+- ⏱️ Фильтрация по длительности (короткие/средние/длинные)
+- 📊 Сортировка по дате, длительности, алфавиту
+- 🎨 Адаптивный дизайн
+- ⚡ SSR и кэширование данных
+- 🔄 Обработка ошибок с возможностью повтора
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Технологии
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Next.js 16, React 19, TypeScript, TanStack Query, Tailwind CSS 4, Vitest
 
-## Deploy on Vercel
+## 📝 Скрипты
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `npm run dev` — запуск dev сервера
+- `npm run build` — сборка для продакшена
+- `npm run start` — запуск production версии
+- `npm run lint` — проверка кода
+- `npm run test` — запуск тестов
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔧 API
+
+**GET /api/videos** — возвращает список из 12 видео (4 коротких, 4 средних, 4 длинных). Генерирует случайные данные и симулирует 10% ошибок для тестирования. Использует кэширование: `s-maxage=60, stale-while-revalidate=120`.
+
+## 💡 Что можно улучшить за 2 часа
+
+- **Страница деталей видео** — реализовать полноценную страницу с описанием, автором, датой публикации вместо placeholder
+- **Пагинация или бесконечная прокрутка** — для больших списков видео
+- **Сохранение избранного** — добавить функционал добавления видео в избранное с сохранением в localStorage
+- **Улучшение тестов** — расширить покрытие тестами компонентов и хуков
+- **Анимации переходов** — добавить плавные анимации при фильтрации и сортировке
+- **Дополнительные фильтры** — фильтр по дате публикации, по автору видео
+
+## 📁 Структура проекта
+
+```
+app/              # Next.js App Router
+  ├── api/videos/ # API эндпоинт
+  └── videos/[id] # Страница деталей видео
+components/        # React компоненты
+hooks/            # Кастомные хуки (useVideos, useFilters, useDebounce)
+lib/              # Утилиты (formatDuration, image-loader)
+```
 
