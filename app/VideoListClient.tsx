@@ -99,12 +99,7 @@ const VideoListInner = () => {
             )}
 
             {!isLoading && !isError && !!filtered.length && (
-                <div
-                    className="grid gap-6"
-                    style={{
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                    }}
-                >
+                <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
                     {filtered.map((video) => (
                         <VideoCard key={video.id} video={video} />
                     ))}

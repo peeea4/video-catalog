@@ -4,6 +4,7 @@
     --color--accent: #4f46e5;
     --color-tahiti: #3ab7bf;
     --color-bermuda: #78dcca;
+    --breakpoint-xl: 75rem;
 }
 
 body {
