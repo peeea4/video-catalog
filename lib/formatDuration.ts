@@ -14,4 +14,3 @@ export function formatDuration(seconds: number): string {
     }
     return `${minutes}:${pad2(secs)}`;
 }
-
