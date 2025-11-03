@@ -35,7 +35,6 @@ export const VideoCard: FC<VideoCardProps> = ({
                     sizes="(min-width: 1200px) 33vw, (min-width: 768px) 50vw, 100vw"
                     style={{ objectFit: 'cover' }}
                     loading="lazy"
-                    unoptimized
                 />
                 <div className="absolute right-2 bottom-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
                     {formatDuration(durationSec)}
