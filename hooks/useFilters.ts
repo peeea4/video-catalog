@@ -4,10 +4,12 @@ import { useCallback, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export type DurationRange = 'short' | 'medium' | 'long' | 'all';
+export type SortOption = 'newest' | 'oldest' | 'shortest' | 'longest' | 'az' | 'za';
 
 type Filters = {
     searchQuery: string;
     duration: DurationRange;
+    sort: SortOption;
 };
 
 function parseDurationRange(raw?: string | null): DurationRange {
@@ -16,14 +18,26 @@ function parseDurationRange(raw?: string | null): DurationRange {
     return 'all';
 }
 
+function parseSort(raw?: string | null): SortOption {
+    if (!raw) return 'newest';
+
+    const allowed: SortOption[] = ['newest', 'oldest', 'shortest', 'longest', 'az', 'za'];
+
+    return allowed.includes(raw as SortOption) ? (raw as SortOption) : 'newest';
+}
+
 export const useFilters = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
     const searchQuery = searchParams.get('searchQuery') ?? '';
     const duration = parseDurationRange(searchParams.get('duration'));
+    const sort = parseSort(searchParams.get('sort'));
 
-    const filters: Filters = useMemo(() => ({ searchQuery, duration }), [duration, searchQuery]);
+    const filters: Filters = useMemo(
+        () => ({ searchQuery, duration, sort }),
+        [duration, searchQuery, sort],
+    );
 
     const setFilters = useCallback(
         (next: Partial<Filters>) => {
@@ -45,6 +59,14 @@ export const useFilters = () => {
                 }
             }
 
+            if (next.sort !== undefined) {
+                if (next.sort === 'newest') {
+                    params.delete('sort');
+                } else {
+                    params.set('sort', next.sort);
+                }
+            }
+
             const search = params.toString();
             const url = `${window.location.pathname}${search ? `?${search}` : ''}`;
 
@@ -54,8 +76,7 @@ export const useFilters = () => {
     );
 
     const resetFilters = useCallback(() => {
-        const url = window.location.pathname;
-        router.replace(url);
+        router.replace(window.location.pathname);
     }, [router]);
 
     const filterFunction = useCallback(
@@ -84,6 +105,27 @@ export const useFilters = () => {
         [filterFunction],
     );
 
+    const sortFunction = useCallback(
+        (a: { title: string; durationSec: number; publishedAt: string }, b: typeof a) => {
+            switch (filters.sort) {
+                case 'oldest':
+                    return new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime();
+                case 'shortest':
+                    return a.durationSec - b.durationSec;
+                case 'longest':
+                    return b.durationSec - a.durationSec;
+                case 'az':
+                    return a.title.localeCompare(b.title);
+                case 'za':
+                    return b.title.localeCompare(a.title);
+                case 'newest':
+                default:
+                    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+            }
+        },
+        [filters.sort],
+    );
+
     return useMemo(
         () => ({
             filters,
@@ -91,7 +133,8 @@ export const useFilters = () => {
             resetFilters,
             filterFunction,
             countFilterMatch,
+            sortFunction,
         }),
-        [filters, setFilters, resetFilters, filterFunction, countFilterMatch],
+        [filters, setFilters, resetFilters, filterFunction, countFilterMatch, sortFunction],
     );
 };

@@ -8,7 +8,7 @@ export default async function Page() {
 
     try {
         await prefetchVideosOnServer(qc);
-    } catch (e) {
+    } catch {
         // ignore server prefetch errors — client will show error state
     }
 
