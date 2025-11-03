@@ -124,4 +124,3 @@ export const VideoListClient: FC<Props> = ({ initialData }) => {
 };
 
 export default VideoListClient;
-

@@ -56,4 +56,3 @@ export const VideoCard: FC<VideoCardProps> = ({
 };
 
 export default VideoCard;
-

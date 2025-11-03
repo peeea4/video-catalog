@@ -42,5 +42,3 @@ export const DurationFilter: FC<Props> = ({ value, onChange }) => {
         </div>
     );
 };
-
-

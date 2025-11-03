@@ -43,4 +43,3 @@ export const SearchInput: FC<Props> = ({
         </label>
     );
 };
-
