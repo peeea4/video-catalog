@@ -3,7 +3,7 @@
 import { useCallback, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-type DurationRange = 'short' | 'medium' | 'long' | 'all';
+export type DurationRange = 'short' | 'medium' | 'long' | 'all';
 
 type Filters = {
     searchQuery: string;
