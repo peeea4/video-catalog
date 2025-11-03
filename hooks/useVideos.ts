@@ -37,7 +37,7 @@ export const useVideos = (initialData?: Video[]) => {
     return query;
 };
 
-async function prefetchVideosOnServer(queryClient: QueryClient) {
+export async function prefetchVideosOnServer(queryClient: QueryClient) {
     await queryClient.prefetchQuery({
         queryKey: QUERY_KEY_VIDEOS,
         queryFn: async (): Promise<Video[]> => {
