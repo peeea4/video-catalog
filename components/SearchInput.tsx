@@ -18,12 +18,17 @@ export const SearchInput: FC<Props> = ({
     const [local, setLocal] = useState(value ?? '');
 
     useEffect(() => {
+        setLocal(value ?? '');
+    }, [value]);
+
+    useEffect(() => {
         const id = setTimeout(() => {
             if (local !== value) onChange(local);
         }, debounceMs);
 
         return () => clearTimeout(id);
-    }, [local, debounceMs, onChange, value]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [local, debounceMs]);
 
     return (
         <label className="flex items-center gap-2 w-full">
@@ -38,4 +43,3 @@ export const SearchInput: FC<Props> = ({
         </label>
     );
 };
-

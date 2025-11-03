@@ -53,6 +53,11 @@ export const useFilters = () => {
         [searchParams, router],
     );
 
+    const resetFilters = useCallback(() => {
+        const url = window.location.pathname;
+        router.replace(url);
+    }, [router]);
+
     const filterFunction = useCallback(
         (video: { title: string; durationSec: number }) => {
             const matchesQuery =
@@ -83,9 +88,10 @@ export const useFilters = () => {
         () => ({
             filters,
             setFilters,
+            resetFilters,
             filterFunction,
             countFilterMatch,
         }),
-        [filters, setFilters, filterFunction, countFilterMatch],
+        [filters, setFilters, resetFilters, filterFunction, countFilterMatch],
     );
 };
