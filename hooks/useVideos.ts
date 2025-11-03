@@ -53,4 +53,3 @@ async function prefetchVideosOnServer(queryClient: QueryClient) {
         },
     });
 }
-

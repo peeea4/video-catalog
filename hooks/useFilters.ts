@@ -89,4 +89,3 @@ export const useFilters = () => {
         [filters, setFilters, filterFunction, countFilterMatch],
     );
 };
-
