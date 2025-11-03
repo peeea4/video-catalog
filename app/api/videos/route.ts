@@ -55,7 +55,7 @@ function generateVideo(id: number, durationSec: number): Video {
         author: AUTHORS[randomInt(0, AUTHORS.length - 1)], // Random author
         durationSec,
         publishedAt: randomDateWithin(120), // Last 120 days
-        thumbnail: `https://picsum.photos/seed/${id}/640/360`, // Stable image per id
+        thumbnail: `/seed/${id}/640/360`, // Stable image per id
     };
 }
 
