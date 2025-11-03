@@ -9,17 +9,21 @@ import { SearchInput } from '@/components/SearchInput';
 import { DurationFilter } from '@/components/DurationFilter';
 import { SkeletonCard } from '@/components/SkeletonCard';
 import { HydrationBoundary } from '@tanstack/react-query';
-import VideoCard from '@/components/VideoCard';
+import { VideoCard } from '@/components/VideoCard';
+import { SortSelect } from '@/components/SortSelect';
 
 type Props = {
     initialData?: DehydratedState;
 };
 
 const VideoListInner = () => {
-    const { filters, setFilters, filterFunction, resetFilters } = useFilters();
+    const { filters, setFilters, filterFunction, resetFilters, sortFunction } = useFilters();
     const { data, isLoading, isError, error, refetch } = useVideos();
 
-    const filtered = useMemo(() => data?.filter(filterFunction) || [], [data, filterFunction]);
+    const filtered = useMemo(
+        () => data?.filter(filterFunction).sort(sortFunction) || [],
+        [data, filterFunction, sortFunction],
+    );
 
     return (
         <div>
@@ -36,6 +40,16 @@ const VideoListInner = () => {
                         value={filters.duration}
                         onChange={(duration) => setFilters({ duration })}
                     />
+                </div>
+
+                <div className="flex items-center gap-3">
+                    <SortSelect value={filters.sort} onChange={(v) => setFilters({ sort: v })} />
+                    <button
+                        onClick={resetFilters}
+                        className="px-3 py-2 text-sm text-gray-600 border rounded hover:bg-gray-100"
+                    >
+                        Reset
+                    </button>
                 </div>
             </div>
 
